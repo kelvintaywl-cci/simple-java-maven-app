@@ -9,4 +9,14 @@ jobs:
       - setup_remote_docker:
           version: 20.10.14
       - checkout
+      - run: |
+          echo "--- Downloading apt updates. ---"
+          sudo apt-get update
+
+          echo "--- Downloading Amazon Corretto JDK v11. ---"
+          wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add -
+          sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
+
+          echo "--- Downloading Amazon Corretto JDK v11. ---"
+          sudo apt-get install -y java-1.8.0-amazon-corretto-jdk
       - run: mvn clean install
